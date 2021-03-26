@@ -11,6 +11,7 @@ class Help(commands.Cog):
   @commands.Cog.listener()
   async def on_ready(self):
     print("Cog ready!")
+    await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="spookie"))
 
   @commands.group(invoke_without_command=True)
   async def help(self, ctx):
@@ -19,9 +20,10 @@ class Help(commands.Cog):
     await ctx.send(embed=e)
   @help.command()
   async def fact(self, ctx):
-    e = discord.Embed(title="Fact!", description="Gives a random fact each time!", color=ctx.author.color)
+    e = discord.Embed(title="Fact!", description=f"A category filled with various types of facts!\nType {prefix}fact for more info.", color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}fact`")
     await ctx.send(embed=e)
+  
 
 
 
