@@ -17,6 +17,7 @@ async def on_ready():
   print("100% loaded!")
 
 
+
 #------------------COMMANDS------------------
 
 
