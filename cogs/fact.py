@@ -16,7 +16,7 @@ class Fact(commands.Cog):
   @commands.group(invoke_without_command=True)
   async def fact(self, ctx):
     e = discord.Embed(title="Fact!", description="Get various types of facts with this command!", color = ctx.author.color)
-    e.add_field(name="Available choices:", value="cat, anime, useless, chuck")
+    e.add_field(name="Available choices:", value="cat, anime, useless, chuck, num")
     e.add_field(name="Syntax:", value=f"`{prefix}fact <category>`\nEg: '{prefix}fact cat'")
     await ctx.send(embed=e)
 
