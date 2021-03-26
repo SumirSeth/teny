@@ -5,7 +5,9 @@ from discord.ext import commands
 
 #------------------CONFIGS------------------
 token = os.environ['TOKEN']
-prefix = '.'
+prefix = os.environ['prefix']
+
+
 bot = commands.Bot(command_prefix=prefix, help_command=None)
 owner = [740845704326676493, 575263293015588867]
 #------------------CONFIGS------------------
@@ -23,19 +25,31 @@ async def on_ready():
 
 
 #------------------COMMANDS------------------
-@bot.group(invoke_without_command=True)
-async def help(ctx):
-  e = discord.Embed(title="Help", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color)
-  e.add_field(name="General", value=f"{prefix}fact", inline=True)
-  await ctx.send(embed=e)
-@help.command()
-async def fact(ctx):
-  e = discord.Embed(title="Fact!", description="Gives a random fact each time!", color=ctx.author.color)
-  e.add_field(name="**Syntax**", value=f"`{prefix}fact`")
-  await ctx.send(embed=e)
 
+@bot.command()
+async def load(ctx, extension):
+  
+  try:
+    bot.load_extension(f'cogs.{extension}')
+    await ctx.send(f"Loaded {extension} cog!")
+  except:
+    await ctx.send("Cog might already be loaded!")
+@bot.command()
+async def unload(ctx, extension):
+  bot.unload_extension(f'cogs.{extension}')
+  await ctx.send(f"Unoaded {extension} cog!")
+
+@bot.command()
+async def reload(ctx, extension):
+  bot.unload_extension(f'cogs.{extension}')
+  bot.load_extension(f'cogs.{extension}')
+  await ctx.send("Reloaded {}".format(extension))
 
 
 #------------------RUN------------------
 keep_alive()
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    bot.load_extension(f'cogs.{filename[:-3]}')
+
 bot.run(token)
