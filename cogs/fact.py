@@ -16,7 +16,7 @@ class Fact(commands.Cog):
   @commands.group(invoke_without_command=True)
   async def fact(self, ctx):
     e = discord.Embed(title="Fact!", description="Get various types of facts with this command!", color = ctx.author.color)
-    e.add_field(name="Available choices:", value="cat, anime, useless, chuck, num")
+    e.add_field(name="Available choices:", value="cat, anime, useless, chuck, num, dog")
     e.add_field(name="Syntax:", value=f"`{prefix}fact <category>`\nEg: '{prefix}fact cat'")
     await ctx.send(embed=e)
 
@@ -61,6 +61,13 @@ class Fact(commands.Cog):
       url= "http://numbersapi.com/random"
     response = requests.request("GET", url=url)
     await ctx.send(embed=em(ctx, "Number fact!", response.text))
+  
+  @fact.command()
+  async def dog(self, ctx):
+    url = "https://dog-api.kinduff.com/api/facts"
+    response = requests.request("GET", url=url)
+    data = json.loads(response.text)
+    await ctx.send(embed=em(ctx, "Dog Fact!", data["facts"][0]))
     
 
 
