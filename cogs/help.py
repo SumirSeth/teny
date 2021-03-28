@@ -18,7 +18,7 @@ class Help(commands.Cog):
   async def help(self, ctx):
     e = discord.Embed(title="Help", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color)
     e.add_field(name="Fact", value=f"`cat`, `anime`, `useless`, `chuck`, `num`, `dog`", inline=True)
-    e.add_field(name="Info", value=f"`{prefix}country <name>`, `{prefix}weather <place>`", inline=False)
+    e.add_field(name="Info", value=f"`{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`", inline=False)
     e.add_field(name="Fun", value=f"`{prefix}hug <user>`, `{prefix}lovecal <name 1> <name 2>`", inline=False)
     await ctx.send(embed=e)
 
@@ -48,6 +48,22 @@ class Help(commands.Cog):
   async def lovecal(self, ctx):
     e = discord.Embed(title="Love Calculator!", description=f"Calculate love % between 2 people!", color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}lovecal <name 1> <name 2>`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def news(self, ctx):
+    e = discord.Embed(title="News!", description=f"Get the breaking news for any search term!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}news <search term> <page number>`")
+    e.add_field(name="Example", value=f"`{prefix}news Elon Musk 1`\nWhere 'Elon Musk' is the search term and '1' is the result page number!")
+    await ctx.send(embed=e)
+  @help.command()
+  async def covid(self, ctx):
+    e = discord.Embed(title="Covid!", description=f"Get the covid stats for any country!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}covid <country name>`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def urban(self, ctx):
+    e = discord.Embed(title="Urban Dictionary!", description=f"Get definition of any word from urban dictionary!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}urban <search term>`")
     await ctx.send(embed=e)
 
 
