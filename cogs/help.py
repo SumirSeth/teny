@@ -19,15 +19,15 @@ class Help(commands.Cog):
     e = discord.Embed(title="Help", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color)
     e.add_field(name="Fact", value=f"`cat`, `anime`, `useless`, `chuck`, `num`, `dog`", inline=True)
     e.add_field(name="Info", value=f"`{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`", inline=False)
-    e.add_field(name="Fun", value=f"`{prefix}hug <user>`, `{prefix}lovecal <name 1> <name 2>`", inline=False)
+    e.add_field(name="Fun", value=f"`{prefix}hug <user>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`, `{prefix}bill`", inline=False)
+    e.add_field(name="Joke", value=f"`Programming (pro)`, `Miscellaneous (misc)`, `Dark (d)`, `Pun (p)`, `Spooky (sp)`, `Christmas (chr)`")
+    e.add_field(name="Bot", value=f"`{prefix}contact <Your issue to the dev>`, `{prefix}invite`", inline=False)
     await ctx.send(embed=e)
 
 
-  @help.command()
+  @help.command(aliases=['cat', 'dog', 'anime', 'useless', 'chuck', 'num'])
   async def fact(self, ctx):
-    e = discord.Embed(title="Fact!", description=f"A category filled with various types of facts!\nType {prefix}fact for more info.", color=ctx.author.color)
-    e.add_field(name="**Syntax**", value=f"`{prefix}fact <category>`")
-    await ctx.send(embed=e)
+    await ctx.send(f"Type `{prefix}fact` for more info.")
 
   @help.command()
   async def country(self, ctx):
@@ -64,6 +64,19 @@ class Help(commands.Cog):
   async def urban(self, ctx):
     e = discord.Embed(title="Urban Dictionary!", description=f"Get definition of any word from urban dictionary!", color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}urban <search term>`")
+    await ctx.send(embed=e)
+  @help.command(aliases=['chr', 'p', 'ch', 'pro', 'misc', 'd', 'sp', 'programming', 'miscellaneous', 'dark', 'pun', 'spooky', 'christmas'])
+  async def joke(self, ctx):
+    await ctx.send(f"Type `{prefix}joke` to get more info.")
+  @help.command()
+  async def advice(self, ctx):
+    e = discord.Embed(title="Advice For You!", description=f"Get an advice from the bot!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}advice`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def bill(self, ctx):
+    e = discord.Embed(title="Be like bill!", description=f"Be like bill images!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}bill`")
     await ctx.send(embed=e)
 
 

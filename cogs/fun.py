@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-import requests, json
+import requests, json, string, random
 
 rkey = os.environ['rkey']
 def err(msg):
@@ -48,6 +48,34 @@ class Fun(commands.Cog):
       
       em = discord.Embed(title="Love Calculator!", description=f'First Person: **{json_data["fname"]}**\nSecond Person: **{json_data["sname"]}**\nLove %: **{json_data["percentage"]}%**\nLove FeedBack: **{json_data["result"]}**', color=ctx.author.color)
       await ctx.send(embed=em)
+  @commands.command()
+  async def advice(self, ctx):
+    url = "https://api.adviceslip.com/advice"
+    response = requests.request("GET", url=url)
+    data = json.loads(response.text)
+
+    em = discord.Embed(title="Advice for you!", description=data["slip"]["advice"], color= ctx.author.color)
+    await ctx.send(embed=em)
+  @commands.command()
+  async def bill(self, ctx):
+    def m():
+      num = random.randint(1,5)
+      l = string.ascii_letters
+      u = string.digits
+      o = ( ''.join(random.choice(l) for i in range(num)) )
+      n = ( ''.join(random.choice(u) for i in range(num)) )
+      b = str(o+n)
+      return b
+
+
+
+    url = f"https://belikebill.ga/billgen-API.php?default=1{m()}"
+    e = discord.Embed(title="Be like bill", color=ctx.author.color, url=url)
+    e.set_image(url=url)
+    await ctx.send(embed=e)
+
+
+
 
 
 

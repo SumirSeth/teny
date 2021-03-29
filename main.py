@@ -53,6 +53,29 @@ async def ping(ctx):
             color=0x990000)
     await ctx.send(embed=embed)
 
+@bot.command()
+@commands.cooldown(1, 3600, commands.BucketType.user)
+async def contact(ctx, *, arg):
+  #https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=2352340160&scope=bot
+  channel = bot.get_channel(825733074674909224)
+  em = discord.Embed(title=f"New report from {ctx.author.name}", description=arg, color = discord.Color.blurple())
+  em.set_footer(text=f"From {ctx.guild.name}")
+  msg = await channel.send(embed=em)
+  for i in ['⬆️', '⬇️']:
+    await msg.add_reaction(i)
+  await ctx.send("Reported!")
+@contact.error
+async def contact_error(ctx, error):
+  if isinstance(error, commands.CommandOnCooldown):
+    await ctx.send(embed=err("This command is on cooldown. Cooldown time: 1 hour."))
+  else:
+    raise error
+@bot.command()
+async def invite(ctx):
+  e = discord.Embed(title="Invite Me!", url="https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=2352340160&scope=bot", color=ctx.author.color)
+  await ctx.send(embed=e)
+
+
 
 
 
@@ -61,21 +84,30 @@ async def ping(ctx):
 #---cogs commands---
 @bot.command()
 async def load(ctx, extension):
-  try:
-    bot.load_extension(f'cogs.{extension}')
-    await ctx.send(f"Loaded {extension} cog!")
-  except:
-    await ctx.send("Cog might already be loaded!")
+  if ctx.author.id == owner[0] or ctx.author.id == owner[1]:
+    try:
+      bot.load_extension(f'cogs.{extension}')
+      await ctx.send(f"Loaded {extension} cog!")
+    except:
+      await ctx.send("Cog might already be loaded!")
+  else:
+    pass
 @bot.command()
 async def unload(ctx, extension):
-  bot.unload_extension(f'cogs.{extension}')
-  await ctx.send(f"Unoaded {extension} cog!")
+  if ctx.author.id == owner[0] or ctx.author.id == owner[1]:
+    bot.unload_extension(f'cogs.{extension}')
+    await ctx.send(f"Unoaded {extension} cog!")
+  else:
+    pass
 
 @bot.command()
 async def reload(ctx, extension):
-  bot.unload_extension(f'cogs.{extension}')
-  bot.load_extension(f'cogs.{extension}')
-  await ctx.send("Reloaded {}".format(extension))
+  if ctx.author.id == owner[0] or ctx.author.id == owner[1]:
+    bot.unload_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension}')
+    await ctx.send("Reloaded {}".format(extension))
+  else:
+    pass
 #---cogs commands---
 
 
