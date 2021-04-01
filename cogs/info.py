@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import requests, json, urllib.parse, asyncio
 
+
 nkey = os.environ['nkey']
 rkey = os.environ['rkey']
 
@@ -205,7 +206,7 @@ class Info(commands.Cog):
             await msg.remove_reaction('5️⃣', member=ctx.author)
         except asyncio.TimeoutError:
           o = 1
-        
+
   
     
     

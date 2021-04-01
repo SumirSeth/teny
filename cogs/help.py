@@ -11,16 +11,16 @@ class Help(commands.Cog):
   @commands.Cog.listener()
   async def on_ready(self):
     print("Cog ready!")
-    await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="spookie"))
+    await self.bot.change_presence(activity=discord.Game(name="type t,help | Dev: Spookie :D"))
 
 
   @commands.group(invoke_without_command=True)
   async def help(self, ctx):
     e = discord.Embed(title="Help", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color)
-    e.add_field(name="Fact", value=f"`cat`, `anime`, `useless`, `chuck`, `num`, `dog`", inline=True)
+    e.add_field(name="Fact", value=f"`{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
     e.add_field(name="Info", value=f"`{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`", inline=False)
-    e.add_field(name="Fun", value=f"`{prefix}hug <user>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`, `{prefix}bill`", inline=False)
-    e.add_field(name="Joke", value=f"`Programming (pro)`, `Miscellaneous (misc)`, `Dark (d)`, `Pun (p)`, `Spooky (sp)`, `Christmas (chr)`")
+    e.add_field(name="Fun", value=f"`{prefix}hug <user>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`, `{prefix}bill`, `{prefix}kanye`", inline=False)
+    e.add_field(name="Joke", value=f"`{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`\n\nType `{prefix}joke` for more info!")
     e.add_field(name="Bot", value=f"`{prefix}contact <Your issue to the dev>`, `{prefix}invite`", inline=False)
     await ctx.send(embed=e)
 
@@ -65,7 +65,7 @@ class Help(commands.Cog):
     e = discord.Embed(title="Urban Dictionary!", description=f"Get definition of any word from urban dictionary!", color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}urban <search term>`")
     await ctx.send(embed=e)
-  @help.command(aliases=['chr', 'p', 'ch', 'pro', 'misc', 'd', 'sp', 'programming', 'miscellaneous', 'dark', 'pun', 'spooky', 'christmas'])
+  @help.command(aliases=['chr', 'p', 'ch', 'pro', 'misc', 'd', 'sp', 'programming', 'miscellaneous', 'dark', 'pun', 'spooky', 'christmas', 'dad', 'dadjoke'])
   async def joke(self, ctx):
     await ctx.send(f"Type `{prefix}joke` to get more info.")
   @help.command()
@@ -78,7 +78,11 @@ class Help(commands.Cog):
     e = discord.Embed(title="Be like bill!", description=f"Be like bill images!", color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}bill`")
     await ctx.send(embed=e)
-
+  @help.command()
+  async def kanye(self, ctx):
+    e = discord.Embed(title="Kanye West Quotes!", description=f"Get random Kanye West Quotes!", color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}kanye`")
+    await ctx.send(embed=e)
 
 
 def setup(bot):

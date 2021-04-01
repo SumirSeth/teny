@@ -73,6 +73,13 @@ class Fun(commands.Cog):
     e = discord.Embed(title="Be like bill", color=ctx.author.color, url=url)
     e.set_image(url=url)
     await ctx.send(embed=e)
+  @commands.command()
+  async def kanye(self, ctx):
+    url = "https://api.kanye.rest/"
+    response = requests.request("GET", url=url)
+    data = json.loads(response.text)
+    embed = discord.Embed(title="Kanye West Quotes!", color=ctx.author.color, description=data["quote"])
+    await ctx.send(embed=embed)
 
 
 

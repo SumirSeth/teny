@@ -20,7 +20,7 @@ class Joke(commands.Cog):
   @commands.group(invoke_without_command=True)
   async def joke(self, ctx):
     e = discord.Embed(title="Joke!", description="A sub-category that contains different types of jokes.", color=ctx.author.color)
-    e.add_field(name="Categories:", value=f"Programming (pro), Miscellaneous (misc), Dark (d), Pun (p), Spooky (sp), Christmas (chr)\n\nFor random fact use `{prefix}joke any`")
+    e.add_field(name="Categories:", value=f"Programming (pro), Miscellaneous (misc), Dark (d), Pun (p), Spooky (sp), Christmas (chr), Dadjoke(dad)\n\nFor random fact use `{prefix}joke any`\n ")
     e.add_field(name="Syntax:", value=f'{prefix}joke <category name>', inline=False)
     e.add_field(name="Example:",value=f'For random jokes use: `{prefix}joke any`.\nFor a category type `{prefix}joke <category name>`\nEg: `{prefix}joke pro` for programming jokes.')
     await ctx.send(embed=e)
@@ -121,6 +121,24 @@ class Joke(commands.Cog):
       await ctx.send(embed=err("This command is on cooldown. Cooldown time: 10s."))
     else:
       raise error
+
+  @joke.command(aliases=['dad'])
+  @commands.cooldown(1,10, commands.BucketType.user)
+  async def dadjoke(self, ctx):
+    headers = {
+        'Accept': 'text/plain',
+    }
+
+    response = requests.get('https://icanhazdadjoke.com/', headers=headers)
+    await ctx.send(embed=em(ctx, "Dad Jokes!", response.text))
+  @dadjoke.error
+  async def dadjoke_error(self, ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+      await ctx.send(embed=err("This command is on cooldown. Cooldown time: 10s"))
+    else:
+      raise error
+
+    
 
 
 
