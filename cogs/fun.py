@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import os
 import requests, json, string, random
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from datetime import datetime
 
 rkey = os.environ['rkey']
 def err(msg):
@@ -80,6 +82,25 @@ class Fun(commands.Cog):
     data = json.loads(response.text)
     embed = discord.Embed(title="Kanye West Quotes!", color=ctx.author.color, description=data["quote"])
     await ctx.send(embed=embed)
+
+  @commands.command()
+  async def gay(self, ctx, member:discord.Member=None):
+    if not member:
+      embed = discord.Embed(title="Gay Rate!", description=f"🏳️‍🌈 {ctx.author.name} is {random.randint(1,100)}% gay. 🏳️‍🌈", color=ctx.author.color)
+      await ctx.send(embed=embed)
+    else:
+      embed = discord.Embed(title="Gay Rate!", description=f"🏳️‍🌈 {member.name} is {random.randint(1,100)}% gay. 🏳️‍🌈", color=ctx.author.color)
+      await ctx.send(embed=embed)
+  
+  @commands.command()
+  async def pp(self, ctx, member:discord.Member=None):
+    if not member:
+      embed = discord.Embed(title="PP Size!", description=f" {ctx.author.name}'s pp is {round(random.uniform(1,10), 2)} inches long.", color=ctx.author.color)
+      await ctx.send(embed=embed)
+    else:
+      embed = discord.Embed(title="PP Size!", description=f" {member.name}'s pp is {round(random.uniform(1,10), 2)} inches long.", color=ctx.author.color)
+      await ctx.send(embed=embed)
+
 
 
 

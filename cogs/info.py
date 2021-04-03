@@ -31,7 +31,9 @@ class Info(commands.Cog):
         capital = data[0]["capital"]
         region = data[0]["region"]
         population = data[0]["population"]
+        population = f"{population:,}"
         area = data[0]["area"]
+        area = f'{area:,}'
         cur = str(data[0]["currencies"][0]["symbol"]) + " "+str(data[0]["currencies"][0]["name"]) + " ("+str(data[0]["currencies"][0]["code"])+")"
         c = data[0]["alpha2Code"]
         flag = f"https://www.countryflags.io/{c}/shiny/64.png"
@@ -207,7 +209,12 @@ class Info(commands.Cog):
         except asyncio.TimeoutError:
           o = 1
 
-  
+  @commands.command()
+  async def say(self,ctx,*,arg):
+    if ctx.author.id == 575263293015588867:
+      await ctx.send(arg)
+      m = ctx.message
+      await m.delete()
     
     
     
