@@ -8,6 +8,15 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.8"
 discord = "^1.0.1"
 flask = "^1.1.2"
+wikipedia = "^1.4.0"
+utils = "^1.0.1"
+cowpy = "^1.1.0"
+python-dotenv = "^0.17.0"
+youtube-dl = "^2021.4.17"
+google-api-python-client = "^2.2.0"
+"alexflipnote.py" = "^2.3.0"
+
+
 
 [tool.poetry.dev-dependencies]
 

@@ -1,15 +1,17 @@
 from keep_alive import keep_alive
 import os
 import discord
-from discord.ext import commands
-import requests, json
+from discord.ext import commands,tasks
+import requests, json, io, contextlib
+
 
 #------------------CONFIGS------------------
 token = os.environ['TOKEN']
 prefix = os.environ['prefix']
 
-
-bot = commands.Bot(command_prefix=prefix, help_command=None)
+intents = discord.Intents().all()
+client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix=prefix, help_command=None,intents=intents)
 
 owner = [740845704326676493, 575263293015588867]
 #------------------CONFIGS------------------
@@ -74,6 +76,10 @@ async def contact_error(ctx, error):
 async def invite(ctx):
   e = discord.Embed(title="Invite Me!", url="https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=2352340160&scope=bot", color=ctx.author.color)
   await ctx.send(embed=e)
+@bot.command()
+async def vote(ctx):
+  e = discord.Embed(title="Vote for me!", description="[**Vote!**](https://top.gg/bot/824888045622394910/vote)\n\n[**Check bot's Top.gg page**](https://top.gg/bot/824888045622394910)",color=ctx.author.color)
+  await ctx.send(embed = e)
 
 @bot.command()
 async def servers(ctx):
@@ -87,10 +93,28 @@ async def servers(ctx):
 
 @bot.event
 async def on_message(message):
+
     if bot.user.mentioned_in(message):
+      if message.mention_everyone:
+        return
+      else:
         embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/channels/401883208511389716/405159360222986253/827177749977628693)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
         await message.channel.send(embed=embed)
     await bot.process_commands(message)
+
+
+
+
+@bot.command()
+async def eval(ctx, *, code):
+  if(ctx.author.id ==owner[0]or owner[1]):
+      str_obj = io.StringIO()
+      try:
+          with contextlib.redirect_stdout(str_obj):
+              exec(code)
+      except Exception as e:
+          return await ctx.send(f"```{e.__class__.__name__}: {e}```")
+      await ctx.send(f'```{str_obj.getvalue()}```')
 
 
 

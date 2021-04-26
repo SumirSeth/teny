@@ -1,0 +1,95 @@
+import discord
+from discord.ext import commands
+import os,requests,json
+from googleapiclient import discovery
+
+
+API_KEY = os.environ['APIKEY']
+
+with open("/home/runner/teny/cogs/ai-serverCheck.json", 'r') as f:
+      ai_server = json.load(f)
+
+class Ai(commands.Cog):
+
+  def __init__(self, bot):
+    self.bot = bot
+
+  @commands.command()
+  async def aioff(self, ctx):
+    gid = ctx.message.guild.id
+    ai_server[f"{gid}"]["ai-chat"] = "False"
+    await ctx.send("AI Features turned off!")
+
+  @commands.Cog.listener()
+  async def on_message(self, message):
+    gid = message.guild.id
+    try:
+      check = ai_server[f"{gid}"]["ai-chat"]
+    except:
+      pass
+    if check == 'True':
+      if message.author == self.bot.user:
+        return
+      else:
+        arg = message.content
+        client = discovery.build(
+          "commentanalyzer",
+          "v1alpha1",
+          developerKey=API_KEY,
+          discoveryServiceUrl="https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
+          static_discovery=False,
+        )
+
+        analyze_request = {
+          'comment': { 'text': f'{arg}' },
+          'requestedAttributes': {'TOXICITY': {}}
+        }
+
+        response = client.comments().analyze(body=analyze_request).execute()
+        emo = ["✅","⚠️","❌"]
+        p = response["attributeScores"]["TOXICITY"]["summaryScore"]["value"]
+        p = str(p)
+        p = p[:3]
+        p = float(p)
+        if p > 0.75:
+            await message.add_reaction(emo[2])
+        elif p > 0.50 and p < 0.75:
+          await message.add_reaction(emo[1])
+        else:
+          await message.add_reaction(emo[0])
+    else:
+      print("No")
+  
+
+  @commands.command()
+  async def aion(self, ctx):
+    gid = ctx.message.guild.id
+    ai_server[f"{gid}"]["ai-chat"] = "True"
+    await ctx.send("AI Features turned on!")
+ 
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def setup(bot):
+  bot.add_cog(Ai(bot))

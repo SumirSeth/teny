@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import os
 import requests, json, urllib.parse, asyncio
-
+import wikipedia
 
 nkey = os.environ['nkey']
 rkey = os.environ['rkey']
@@ -83,7 +83,7 @@ class Info(commands.Cog):
       flag = f"https://www.countryflags.io/{country}/shiny/64.png"
 
       embed = discord.Embed(title="",
-                            description=f"**Name:** {name}\n**Country**: {country}", color=discord.Color.blue())
+                            description=f"**Name:** {name}\n**Country**: {country}", color=ctx.author.color)
       embed.add_field(
           name="Overview",
           value=
@@ -95,6 +95,7 @@ class Info(commands.Cog):
           f"**Pressure:** {pressure} mbar\n**Visibility**: {visibility} km\n**Windspeed**: {windspeed} km/h\n**Humidity**: {humidty}%",
           inline=True)
       embed.set_author(name='Weather info!',icon_url=flag)
+      embed.set_image(url =f"https://api.cool-img-api.ml/weather-card?location={urllib.parse.quote_plus(name)}&background=https://cdn.discordapp.com/attachments/804212727869866006/835887505496473621/wDEJbRXfHT0NAAAAABJRU5ErkJggg.png")
       await ctx.send(embed = embed)
 
   @commands.command()
@@ -193,19 +194,34 @@ class Info(commands.Cog):
           reaction, user = await self.bot.wait_for('reaction_add', timeout=300,check=check)
           if(reaction.emoji=='1️⃣'):
             await msg.edit(embed=terms(0))
-            await msg.remove_reaction('1️⃣',member=ctx.author)
+            try:
+              await msg.remove_reaction('1️⃣',member=ctx.author)
+            except:
+              pass
           elif(reaction.emoji == '2️⃣'):
             await msg.edit(embed=terms(1))
-            await msg.remove_reaction('2️⃣', member=ctx.author)
+            try:
+              await msg.remove_reaction('2️⃣', member=ctx.author)
+            except:
+              pass
           elif(reaction.emoji == '3️⃣'):
             await msg.edit(embed=terms(2))
-            await msg.remove_reaction('3️⃣', member=ctx.author)
+            try:
+              await msg.remove_reaction('3️⃣', member=ctx.author)
+            except:
+              pass
           elif(reaction.emoji == '4️⃣'):
             await msg.edit(embed=terms(3))
-            await msg.remove_reaction('4️⃣', member=ctx.author)
+            try:
+              await msg.remove_reaction('4️⃣', member=ctx.author)
+            except:
+              pass
           elif(reaction.emoji == '5️⃣'):
             await msg.edit(embed=terms(4))
-            await msg.remove_reaction('5️⃣', member=ctx.author)
+            try:
+              await msg.remove_reaction('5️⃣', member=ctx.author)
+            except:
+              pass
         except asyncio.TimeoutError:
           o = 1
 
@@ -215,6 +231,58 @@ class Info(commands.Cog):
       await ctx.send(arg)
       m = ctx.message
       await m.delete()
+  
+  @commands.command()
+  async def wiki(self, ctx, *,arg=None):
+    try:
+      if not arg:
+        await ctx.send(embed= err("Please give a search term!"))
+      else:
+        star = arg.replace("","")
+        end = wikipedia.summary(star)
+        embed = discord.Embed(title="Wiki!", description = end, color = ctx.author.color)
+        await ctx.send(embed = embed)
+    except:
+      try:
+        start = arg.replace("","")
+        end = wikipedia.summary(start, sentences=10)
+        embed = discord.Embed(title="Wiki!", description = end, color = ctx.author.color)
+        await ctx.send(embed = embed)
+      except Exception as e:
+        await ctx.send(embed=err(e))
+  
+  @commands.command()
+  async def curcon(self, ctx, arg=None, arg2=None, arg3=None):
+    if not arg:
+      await ctx.send(embed = err(f"Please type {prefix}help curcon to see correct format!"))
+    elif not arg3:
+      if not arg2:
+        if arg.lower() == "all":
+          url = 'https://api.ratesapi.io/api/latest?base=USD'
+          response = requests.request("GET", url=url)
+          data = json.loads(response.text)
+          rate = data["rates"]
+          rate = str(rate).strip('{}').replace("'","")
+          desc = f"1 **USD** is :-\n\n{rate}"
+          embed = discord.Embed(title="Currency Info!", description=desc, color = ctx.author.color)
+          await ctx.send(embed=embed)
+        else:
+          await ctx.send(embed = err(f"Please type {prefix}help curcon to see correct format!"))
+      else:
+        u1 = arg
+        u2 = arg2
+        u1 = u1.upper()
+        u2 = u2.upper()
+        url = f"https://api.ratesapi.io/api/latest?base={u1}&symbols={u2}"
+        response = requests.request("GET", url=url)
+        data = json.loads(response.text)
+        rate = data["rates"]
+        rate = str(rate).strip('{}').replace("'","")
+        desc = f"🔵 1 **{u1}** equates to **{rate}**\n\n*As of {data['date']}.*"
+        embed = discord.Embed(title="Currency Converter!", description=desc, color = ctx.author.color)
+        await ctx.send(embed=embed)
+
+    
     
     
     

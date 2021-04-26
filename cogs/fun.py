@@ -4,8 +4,12 @@ import os
 import requests, json, string, random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from datetime import datetime
+import urllib.parse
 
 rkey = os.environ['rkey']
+def em(ctx,title, msg):
+  e = discord.Embed(title=title, description=msg, color= ctx.author.color)
+  return e
 def err(msg):
   er = discord.Embed(title="", description='', color=0xe74c3c)
   er.set_author(name=msg,icon_url="https://cdn.discordapp.com/attachments/804212727869866006/824902921505865749/772509.png")
@@ -23,8 +27,25 @@ class Fun(commands.Cog):
     url = "https://some-random-api.ml/animu/hug"
     response = requests.request("GET", url)
     data = json.loads(response.text)
-    embed = discord.Embed(title="", description=f"{ctx.message.author.name} hugs {ctx.message.mentions[0].name} 🤗", color=ctx.author.color)
-    embed.set_image(url=data['link'])
+    if not arg:
+      embed = discord.Embed(title="", description=f"🤗", color=ctx.author.color)
+      embed.set_image(url=data['link'])
+    else:
+      embed = discord.Embed(title="", description=f"{ctx.message.author.name} hugs {ctx.message.mentions[0].name} 🤗", color=ctx.author.color)
+      embed.set_image(url=data['link'])
+    await ctx.send(embed = embed)
+
+  @commands.command()
+  async def wink(self, ctx, arg=None):
+    url = "https://some-random-api.ml/animu/wink"
+    response = requests.request("GET", url)
+    data = json.loads(response.text)
+    if not arg:
+      embed = discord.Embed(title="", description=f"😉", color=ctx.author.color)
+      embed.set_image(url=data['link'])
+    else:
+      embed = discord.Embed(title="", description=f"{ctx.message.author.name} winks {ctx.message.mentions[0].name} 😉", color=ctx.author.color)
+      embed.set_image(url=data['link'])
     await ctx.send(embed = embed)
 
   @commands.command()
@@ -100,11 +121,92 @@ class Fun(commands.Cog):
     else:
       embed = discord.Embed(title="PP Size!", description=f" {member.name}'s pp is {round(random.uniform(1,10), 2)} inches long.", color=ctx.author.color)
       await ctx.send(embed=embed)
-
-
-
-
-
+  @commands.command()
+  async def quote(self, ctx):
+    response = requests.request("GET", url="https://zenquotes.io/api/random")
+    data = json.loads(response.text)
+    
+    o = f'**"{data[0]["q"]}"**\n\n-{data[0]["a"]}'
+    await ctx.send(embed=em(ctx,"Random Quotes!",o))
+    
+  @commands.command()
+  async def meme(self, ctx):
+    response = requests.request("GET", url="https://meme-api.herokuapp.com/gimme")
+    data = json.loads(response.text)
+    emb = em(ctx, "Meme for You!", f'[{data["title"]}]({data["postLink"]})')
+    emb.set_image(url=data["url"])
+    await ctx.send(embed = emb)
+  
+  @commands.Cog.listener()
+  async def on_message(self, message):
+    if message.author.id == 533257402267598868:
+      def c(arg):
+        a = "🤡"
+        b = ''
+        for i in range(int(arg)):
+          b = a+b
+        return b
+      n = random.randint(1, 200)
+      await message.channel.send('Stoof simps piper(again)')
+    
+  @commands.command()
+  async def monke(self,ctx):
+    def m():
+      num = random.randint(1,5)
+      l = string.ascii_letters
+      u = string.digits
+      o = ( ''.join(random.choice(l) for i in range(num)) )
+      n = ( ''.join(random.choice(u) for i in range(num)) )
+      b = str(o+n)
+      return b
+    emb = em(ctx, "Reject Humanity, return to Monke",'')
+    emb.set_image(url=f'https://www.placemonkeys.com/500/350?random={m()}')
+    await ctx.send(embed=emb)
+  @commands.command(aliases=["8ball", "8Ball"])
+  async def eightball(self, ctx, * , arg=None):
+    if not arg:
+      await ctx.send(embed = err("Please give a question!"))
+    else:
+      responses =  ["As I see it, yes.","Ask again later.","Better not tell you now.","Cannot predict now.","Concentrate and ask again.","Don’t count on it.","It is certain.","It is decidedly so.","Most likely.","My reply is no.","My sources say no.","Outlook not so good.","Outlook good.","Reply hazy, try again.","Signs point to yes.","Very doubtful.","Without a doubt.","Yes.","Yes – definitely.","You may rely on it."]
+      r = random.choice(responses)
+      desc = f'*Question*: **{arg}**\n\n*Answer*: **{r}**'
+      await ctx.send(embed = em(ctx, "8 Ball!", desc))
+  
+  @commands.command()
+  async def doge(self, ctx, *, arg=None):
+    if not arg:
+      await ctx.send(embed = err("No arguments given."))
+    else:
+      arg = urllib.parse.quote_plus(arg)
+      url = f"https://api.funtranslations.com/translate/doge.json?text={arg}"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      tran = data["contents"]["translated"]
+      tex = data["contents"]["text"]
+      desc = f"*Text*: **{tex}**\n\n*Doge Language:* **{tran}**"
+      await ctx.send(embed= em(ctx, "Doge Translations!", desc))
+  
+  @commands.command()
+  async def aff(self, ctx):
+    url = "https://www.affirmations.dev/"
+    response = requests.request("GET", url=url)
+    data = json.loads(response.text)
+    af = data["affirmation"]
+    await ctx.send(embed = em(ctx, "Affirmation from Tény!",af))
+  
+  @commands.command(aliases=["y/n"])
+  async def yesno(self, ctx, arg):
+    if not arg:
+      await ctx.send(embed = err("You forgot to give a question."))
+    else:
+      url = "https://yesno.wtf/api/"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      a = data["answer"]
+      l = data["image"]
+      embed = em(ctx, "Yes or No-", f'**{a}**')
+      embed.set_image(url = l)
+      await ctx.send(embed = embed)
 
 
 

@@ -20,7 +20,7 @@ class Joke(commands.Cog):
   @commands.group(invoke_without_command=True)
   async def joke(self, ctx):
     e = discord.Embed(title="Joke!", description="A sub-category that contains different types of jokes.", color=ctx.author.color)
-    e.add_field(name="Categories:", value=f"Programming (pro), Miscellaneous (misc), Dark (d), Pun (p), Spooky (sp), Christmas (chr), Dadjoke(dad)\n\nFor random fact use `{prefix}joke any`\n ")
+    e.add_field(name="Categories:", value=f"Programming (pro), Miscellaneous (misc), Dark (d), Pun (p), Spooky (sp), Christmas (chr), Dadjoke(dad), yomom, bread\n\nFor random fact use `{prefix}joke any`\n ")
     e.add_field(name="Syntax:", value=f'{prefix}joke <category name>', inline=False)
     e.add_field(name="Example:",value=f'For random jokes use: `{prefix}joke any`.\nFor a category type `{prefix}joke <category name>`\nEg: `{prefix}joke pro` for programming jokes.')
     await ctx.send(embed=e)
@@ -133,6 +133,36 @@ class Joke(commands.Cog):
     await ctx.send(embed=em(ctx, "Dad Jokes!", response.text))
   @dadjoke.error
   async def dadjoke_error(self, ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+      await ctx.send(embed=err("This command is on cooldown. Cooldown time: 10s"))
+    else:
+      raise error
+  
+  @joke.command()
+  @commands.cooldown(1,10, commands.BucketType.user)
+  async def yomom(self, ctx):
+    url = "https://api.yomomma.info/"
+    response = requests.request("GET", url=url)
+    data = json.loads(response.text)
+    mam = data["joke"]
+    await ctx.send(embed  = em(ctx, "Yo momma!", mam))
+  @yomom.error
+  async def yomom_error(self, ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+      await ctx.send(embed=err("This command is on cooldown. Cooldown time: 10s"))
+    else:
+      raise error
+      
+  @joke.command()
+  @commands.cooldown(1,10, commands.BucketType.user)
+  async def bread(self, ctx):
+    url = "https://my-bao-server.herokuapp.com/api/breadpuns"
+    response = requests.request("GET", url=url)
+    
+    b = response.text
+    await ctx.send(embed  = em(ctx, "Bread Puns!", b))
+  @bread.error
+  async def bread_error(self, ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
       await ctx.send(embed=err("This command is on cooldown. Cooldown time: 10s"))
     else:
