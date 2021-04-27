@@ -1,0 +1,6 @@
+'fact'
+'fact'
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'

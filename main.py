@@ -74,7 +74,7 @@ async def contact_error(ctx, error):
     raise error
 @bot.command()
 async def invite(ctx):
-  e = discord.Embed(title="Invite Me!", url="https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=2352340160&scope=bot", color=ctx.author.color)
+  e = discord.Embed(title="Invite Me!", url="https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot", color=ctx.author.color)
   await ctx.send(embed=e)
 @bot.command()
 async def vote(ctx):
@@ -98,7 +98,7 @@ async def on_message(message):
       if message.mention_everyone:
         return
       else:
-        embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/channels/401883208511389716/405159360222986253/827177749977628693)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
+        embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
         await message.channel.send(embed=embed)
     await bot.process_commands(message)
 

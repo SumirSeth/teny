@@ -28,101 +28,156 @@ class Random(commands.Cog):
   
   @random.command()
   async def cat(self, ctx):
-    url = "https://api.thecatapi.com/v1/images/search"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    cat = data[0]["url"]
-    emb = em(ctx, "Random Cat Images!",'')
-    emb.set_image(url=cat)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://api.thecatapi.com/v1/images/search"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      cat = data[0]["url"]
+      emb = em(ctx, "Random Cat Images!",'')
+      emb.set_image(url=cat)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
   
   @random.command()
   async def dog(self, ctx):
-    url = "https://dog.ceo/api/breeds/image/random"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    dog = data["message"]
-    emb = em(ctx, "Random Dog Images!",'')
-    emb.set_image(url=dog)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://dog.ceo/api/breeds/image/random"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      dog = data["message"]
+      emb = em(ctx, "Random Dog Images!",'')
+      emb.set_image(url=dog)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
   
   @random.command()
   async def fox(self, ctx):
-    url = "https://randomfox.ca/floof/"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    fox = data["image"]
-    emb = em(ctx, "Random Fox Images!",'')
-    emb.set_image(url=fox)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://randomfox.ca/floof/"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      fox = data["image"]
+      emb = em(ctx, "Random Fox Images!",'')
+      emb.set_image(url=fox)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def panda(self, ctx):
-    url = "https://some-random-api.ml/img/panda"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    panda = data["link"]
-    emb = em(ctx, "Random Panda Images!",'')
-    emb.set_image(url=panda)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://some-random-api.ml/img/panda"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      panda = data["link"]
+      emb = em(ctx, "Random Panda Images!",'')
+      emb.set_image(url=panda)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def redpanda(self, ctx):
-    url = "https://some-random-api.ml/img/red_panda"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    rpanda = data["link"]
-    emb = em(ctx, "Random Red Panda Images!",'')
-    emb.set_image(url=rpanda)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://some-random-api.ml/img/red_panda"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      rpanda = data["link"]
+      emb = em(ctx, "Random Red Panda Images!",'')
+      emb.set_image(url=rpanda)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def bird(self, ctx):
-    url = "https://some-random-api.ml/img/birb"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    bird = data["link"]
-    emb = em(ctx, "Random Bird Images!",'')
-    emb.set_image(url=bird)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://some-random-api.ml/img/birb"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      bird = data["link"]
+      emb = em(ctx, "Random Bird Images!",'')
+      emb.set_image(url=bird)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def koala(self, ctx):
-    url = "https://some-random-api.ml/img/koala"
-    response = requests.request("GET", url=url)
-    data = json.loads(response.text)
-    koala = data["link"]
-    emb = em(ctx, "Random Koala Images!",'')
-    emb.set_image(url=koala)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://some-random-api.ml/img/koala"
+      response = requests.request("GET", url=url)
+      data = json.loads(response.text)
+      koala = data["link"]
+      emb = em(ctx, "Random Koala Images!",'')
+      emb.set_image(url=koala)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def image(self, ctx):
-    url = f"https://source.unsplash.com/random/300x200?sig=${random.randint(1, 100000)}"
-    emb = em(ctx, "Random Images!",'')
-    emb.set_image(url=url)
-    await ctx.send(embed = emb)  
+    try:
+      url = f"https://source.unsplash.com/random/300x200?sig=${random.randint(1, 100000)}"
+      emb = em(ctx, "Random Images!",'')
+      emb.set_image(url=url)
+      await ctx.send(embed = emb)  
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @random.command()
   async def color(self, ctx):
-    url = "https://random-data-api.com/api/color/random_color"
-    
-    response = requests.request("GET", url=url)
-    
-    data = json.loads(response.text)
-    a = data["hex_value"]
-    he = a
-    name = data["color_name"]
-    img = await alex.colour_image(colour = a)
-    a = a[1:]
-    a = int(a, 16)
-    a = hex(a)
-    a = int(a, 16)
-    
-    emb = discord.Embed(title="Random Color!", description=f"*Name*: **{name.title()}**\n\n*Hex*: **{he}**", color = a)
-    
-    emb.set_thumbnail(url = img)
-    await ctx.send(embed = emb)
+    try:
+      url = "https://random-data-api.com/api/color/random_color"
+      
+      response = requests.request("GET", url=url)
+      
+      data = json.loads(response.text)
+      a = data["hex_value"]
+      he = a
+      name = data["color_name"]
+      img = await alex.colour_image(colour = a)
+      a = a[1:]
+      a = int(a, 16)
+      a = hex(a)
+      a = int(a, 16)
+      
+      emb = discord.Embed(title="Random Color!", description=f"*Name*: **{name.title()}**\n\n*Hex*: **{he}**", color = a)
+      
+      emb.set_thumbnail(url = img)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+  
   
 
 
