@@ -50,9 +50,28 @@ class General(commands.Cog):
         f.close()
 
   @commands.command()
-  async def kk(self, ctx):
-    async for i in self.bot.fetch_guilds():
-        print(f"{len(i.members)} : {i.name}")
+  async def members(self, ctx):
+    
+    guilds = self.bot.guilds
+    members = 0
+    for guild in guilds:
+      members += len(guild.members)
+    
+    
+    members_set = set()
+    for guild in guilds:
+      for member in guild.members:
+          members_set.add(member)
+    uniq_members = len(members_set)
+    
+
+    
+    if isinstance(ctx.channel, discord.channel.DMChannel):
+          desc = f"**Use this command in a server, to get server members too!**\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
+    else:
+      a=ctx.guild.member_count
+      desc = f"**Members in** ***{ctx.guild.name:}*** **:** {a}\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
+    await ctx.send(embed=em(ctx, f"Members Info!", desc))
 
 
 

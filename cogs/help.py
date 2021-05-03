@@ -20,24 +20,25 @@ class Help(commands.Cog):
   
     e.set_author(name = "Help", url="", icon_url="https://cdn.discordapp.com/attachments/825992733960175616/836626787546562641/1f6e0.png")
 
-    e.add_field(name="Fact", value=f"`{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
+    e.add_field(name="<:info:836638112394117160> Fact", value=f"<a:st:836663594262200390> `{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
 
-    e.add_field(name="Info", value=f"`{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`", inline=False)
+    e.add_field(name="<:info:836638112394117160> Info", value=f"<a:st:836663594262200390> `{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`", inline=False)
 
-    e.add_field(name="General", value=f"`{prefix}ping`, `{prefix}help`, `{prefix}poll <title|option1|option2|...option10>`", inline=False)
+    e.add_field(name="<:info:836638112394117160> General", value=f"<a:st:836663594262200390> `{prefix}ping`, `{prefix}help`, `{prefix}poll <title|option1|option2|...option10>`, `{prefix}members`", inline=False)
 
-    e.add_field(name="Fun", value=f"`{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`", inline=False)
+    e.add_field(name="<:info:836638112394117160> Fun", value=f"<a:st:836663594262200390> `{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`", inline=False)
 
-    e.add_field(name="Joke", value=f"`{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
+    e.add_field(name="<:info:836638112394117160> Joke", value=f"<a:st:836663594262200390> `{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
 
-    e.add_field(name="Random", value=f"`{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=False)
+    e.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=False)
 
-    e.add_field(name="Bot", value=f"`{prefix}contact <Your issue to the dev>`, `{prefix}invite`", inline=False)
+    e.add_field(name="<:info:836638112394117160> Bot", value=f"<a:st:836663594262200390> `{prefix}contact <Your issue to the dev>`, `{prefix}invite`", inline=False)
 
-    e.add_field(name="Invite Bot", value="[Invite](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=False)
+    e.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=False)
     
     e.set_footer(text="By Spookie_Stunkk/Sumir")
     await ctx.send(embed=e)
+
     
 
 
@@ -168,6 +169,18 @@ class Help(commands.Cog):
     e = discord.Embed(title="Yes or No?", description=f"Get answer of a question with a yes or no with a gif from the bot!" , color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}y/n <arg>`")
     e.add_field(name="Aliases", value=f"`{prefix}yesno <arg>`")
+    await ctx.send(embed=e)
+  
+  @help.command()
+  async def poll(self, ctx):
+    e = discord.Embed(title="Polls!", description=f"Make a poll with maximum 10 options!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}poll <title|option1|option2|...option10>`")
+    await ctx.send(embed=e)
+
+  @help.command()
+  async def members(self, ctx):
+    e = discord.Embed(title="Member Info!", description=f"Get member info of the server and the bot together!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}members`")
     await ctx.send(embed=e)
 
 

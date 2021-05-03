@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os, requests, json, random
 import alexflipnote
+import asyncio
 
 alex = alexflipnote.Client("A4r4T7opKWOTnLnwOXDLYKLnlEkvi2cbgkIMTci5")
 
@@ -161,14 +162,19 @@ class Random(commands.Cog):
       data = json.loads(response.text)
       a = data["hex_value"]
       he = a
-      name = data["color_name"]
+  
       img = await alex.colour_image(colour = a)
       a = a[1:]
+      
+      brl = f"http://thecolorapi.com/id?hex={a}"
       a = int(a, 16)
       a = hex(a)
       a = int(a, 16)
-      
-      emb = discord.Embed(title="Random Color!", description=f"*Name*: **{name.title()}**\n\n*Hex*: **{he}**", color = a)
+      res = requests.request("GET", url = brl)
+      await asyncio.sleep(3)
+      d = json.loads(res.text)
+      name = d["name"]["value"]
+      emb = discord.Embed(title="Random Color!", description=f"*Name*: **{name}**\n\n*Hex*: **{he}**", color = a)
       
       emb.set_thumbnail(url = img)
       await ctx.send(embed = emb)

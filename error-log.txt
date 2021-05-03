@@ -4,3 +4,14 @@ KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'KeyError at line 48
 KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
 KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
 KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+KeyError at line 173 of /home/runner/teny/cogs/random.py: 'name'
+KeyError at line 173 of /home/runner/teny/cogs/random.py: 'name'
+JSONDecodeError at line 172 of /home/runner/teny/cogs/random.py: Expecting value: line 1 column 1 (char 0)
+JSONDecodeError at line 173 of /home/runner/teny/cogs/random.py: Expecting value: line 1 column 1 (char 0)
+JSONDecodeError at line 173 of /home/runner/teny/cogs/random.py: Expecting value: line 1 column 1 (char 0)
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+KeyError at line 48 of /home/runner/teny/cogs/fact.py: 'fact'
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range

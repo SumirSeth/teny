@@ -4,6 +4,12 @@ import os
 import requests, json
 import traceback
 
+
+rkey = os.environ['rkey']
+
+animu = os.environ['animu']
+
+
 def em(ctx,title, msg):
   e = discord.Embed(title=title, description=msg, color= ctx.author.color)
   return e
@@ -39,7 +45,8 @@ class Fact(commands.Cog):
     try:
       url = "https://animu.p.rapidapi.com/fact"
       headers = {
-          'x-rapidapi-key': "e123529625msh5f98aa5bd893b45p1df177jsn008200ae5772",
+          'auth': f"{animu}",
+          'x-rapidapi-key': f"{rkey}",
           'x-rapidapi-host': "animu.p.rapidapi.com"
           }
       response = requests.request("GET", url, headers=headers)
