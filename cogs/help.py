@@ -46,7 +46,7 @@ class Help(commands.Cog):
     msg = await ctx.send(embed=h(0))
 
 
-    emotes= ["◀️", "▶️"]
+    emotes= ["⏪","◀️", "▶️","⏩"]
     for e in emotes:
       await msg.add_reaction(e)
     def check(reaction, user):
@@ -54,6 +54,7 @@ class Help(commands.Cog):
     
     o = 0
     rnum = 0
+    m = 0
     while o==0:
       try:
         reaction, user = await self.bot.wait_for('reaction_add', timeout=120,check=check)
@@ -67,7 +68,11 @@ class Help(commands.Cog):
           try:
             await msg.remove_reaction('◀️',member=ctx.author)
           except:
-            pass
+            if m == 0:
+              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+              m = 1
+            else:
+              pass
 
         if reaction.emoji == "▶️":
           if rnum == 7:
@@ -78,7 +83,34 @@ class Help(commands.Cog):
           try:
             await msg.remove_reaction('▶️',member=ctx.author)
           except:
-            pass
+            if m == 0:
+              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+              m = 1
+            else:
+              pass
+        
+        if reaction.emoji == "⏪":
+          await msg.edit(embed = h(0))
+          try:
+            await msg.remove_reaction("⏪", member=ctx.author)
+          except:
+            if m == 0:
+              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+              m = 1
+            else:
+              pass
+        
+
+        if reaction.emoji == "⏩":
+          await msg.edit(embed = h(7))
+          try:
+            await msg.remove_reaction("⏩", member=ctx.author)
+          except:
+            if m == 0:
+              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+              m = 1
+            else:
+              pass
 
       except asyncio.TimeoutError:
         o = 1
