@@ -11,7 +11,7 @@ prefix = os.environ['prefix']
 
 intents = discord.Intents().all()
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix=prefix, help_command=None,intents=intents)
+bot = commands.Bot(command_prefix=["t,", "T,", "<@824888045622394910> "], help_command=None,intents=intents)
 
 owner = [740845704326676493, 575263293015588867]
 #------------------CONFIGS------------------
@@ -78,7 +78,7 @@ async def invite(ctx):
   await ctx.send(embed=e)
 @bot.command()
 async def vote(ctx):
-  e = discord.Embed(title="Vote for me!", description="[**Vote!**](https://top.gg/bot/824888045622394910/vote)\n\n[**Check bot's Top.gg page**](https://top.gg/bot/824888045622394910)",color=ctx.author.color)
+  e = discord.Embed(title="Vote for me!", description="[**Vote!**](https://top.gg/bot/824888045622394910/vote)\n\n[**Check bot's Top.gg page**](https://top.gg/bot/824888045622394910)\n\n[**Check bot's DBL page**](https://botdesignerlist.com/bot/KkNNjmaN9ZrDFkYAvovX)\n[Vote on DBL](https://botdesignerlist.com/bot/KkNNjmaN9ZrDFkYAvovX#rate-bot)",color=ctx.author.color)
   await ctx.send(embed = e)
 
 @bot.command()
@@ -91,16 +91,19 @@ async def servers(ctx):
       o = o + 1
     await ctx.send(f'{a}\n{o}')
 
-@bot.event
+@commands.bot_has_permissions(send_messages=True)
+@bot.event 
 async def on_message(message):
-
-    if bot.user.mentioned_in(message):
-      if message.mention_everyone:
-        return
-      else:
-        embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
-        await message.channel.send(embed=embed)
-    await bot.process_commands(message)
+  try:
+      if bot.user.mentioned_in(message):
+        if message.mention_everyone:
+          return
+        else:
+          embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
+          await message.channel.send(embed=embed)
+      await bot.process_commands(message)
+  except Exception as e:
+    print(f"Ping error: {e}")
 
 
 

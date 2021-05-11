@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import os
 import requests, json, urllib.parse, asyncio
-import wikipedia
+import wikipedia, asyncio
 
 nkey = os.environ['nkey']
 rkey = os.environ['rkey']
@@ -325,7 +325,34 @@ class Info(commands.Cog):
       with open("/home/runner/teny/error-log.txt", "a") as f:
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
+      
+  @commands.command()
+  async def lyrics(self, ctx, *, arg):
+    arg = arg.replace(" ", "%20")
+    url = f"https://some-random-api.ml/lyrics?title={arg}"
+    response = requests.request("GET", url=url)
+    await asyncio.sleep(2)
+    data = json.loads(response.text)
 
+    title = data["title"]
+    author = data["author"]
+    lyrics = data["lyrics"]
+    lyrics2 = ""
+    if len(str(lyrics)) > 1400:
+      lyrics2 = lyrics[1400:]
+      lyrics = lyrics[:1400]
+    try:
+      thum = data["thumbnail"]["genius"] 
+    except Exception as e:
+      await ctx.send(f"Could't load thumbnail. Error=> {e}")
+
+    emb = discord.Embed(title = f"{title}", description=f"{lyrics}", color=ctx.author.color)
+    emb.set_author(name=f"{author}")
+    emb.set_thumbnail(url = thum)
+    await ctx.send(embed = emb)
+    if lyrics2 != "":
+      await ctx.send(embed = discord.Embed(title="", description=lyrics2, color=ctx.author.color).set_thumbnail(url=thum))
+    
     
     
     

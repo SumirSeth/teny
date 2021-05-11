@@ -51,27 +51,165 @@ class General(commands.Cog):
 
   @commands.command()
   async def members(self, ctx):
-    
-    guilds = self.bot.guilds
-    members = 0
-    for guild in guilds:
-      members += len(guild.members)
-    
-    
-    members_set = set()
-    for guild in guilds:
-      for member in guild.members:
-          members_set.add(member)
-    uniq_members = len(members_set)
-    
+    try:
+      guilds = self.bot.guilds
+      members = 0
+      for guild in guilds:
+        members += len(guild.members)
+      
+      
+      members_set = set()
+      for guild in guilds:
+        for member in guild.members:
+            members_set.add(member)
+      uniq_members = len(members_set)
+      
 
+      
+      if isinstance(ctx.channel, discord.channel.DMChannel):
+            desc = f"**Use this command in a server, to get server members too!**\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
+      else:
+        a=ctx.guild.member_count
+        desc = f"**Members in** ***{ctx.guild.name:}*** **:** {a}\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
+      await ctx.send(embed=em(ctx, f"Members Info!", desc))
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+
+
+  @commands.command()
+  async def channels(self, ctx):
+    try:
+      bot = self.bot
+      text_channel_list = []
+      for channel in bot.get_all_channels():
+          text_channel_list.append(channel)
+      num_all = len(text_channel_list)
+
+      if isinstance(ctx.channel, discord.channel.DMChannel):
+        desc = f"**Use this command in a server to get server channel stats!**\n\n*The bot can see* **{num_all} channels** *including voice and text channels.*"
+      else:
+        ch = 0
+        vc = 0
+        ca = 0
+        for channel in ctx.guild.text_channels:
+          ch += 1
+        for channel in ctx.guild.voice_channels:
+          vc += 1
+        for channel in ctx.guild.categories:
+          ca += 1
+        
+        desc = f"**Text Channels:** ***{ch}***\n**Voice Channels:** ***{vc}***\n**Categories:** ***{ca}***\n**Total:** ***{ch+vc+ca}***\n\n*The bot can see* **{num_all} channels** *including voice and text channels.*"
+      await ctx.send(embed = em(ctx, "Channel Info!", desc))
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+  
+  @commands.command()
+  async def website(self, ctx):
+    await ctx.send(embed = em(ctx, "My Website!", "http://teny.sumir.unaux.com"))
+  
+  @commands.command()
+  async def oxygene(self, ctx, *, arg=None):
+    try:
+      if not arg:
+        await ctx.send(embed = err("Please provide an argument!"))
+      else:
+        arg = arg.replace(" ", "%20")
+        url = f"https://gdcolon.com/tools/gdlogo/img/{arg}"
+        emb = em(ctx, "", "")
+        emb.set_image(url = url)
+        await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+
+  @commands.command()
+  async def whois(self, ctx, member:discord.Member=None):
+    try:
+      if not member:
+        member = ctx.author
+
+      name = member.name
+      username = member
+      nick = member.nick
+      
+      avatar = member.avatar_url
+      created = member.created_at
+      tim = created.strftime("%I:%M %p")
+      year = created.strftime("%B %d, %Y")
+      joined = member.joined_at
+      tim_join = joined.strftime("%I:%M %p")
+      year_join = joined.strftime("%B %d, %Y")
+
+      roles = member.roles
+      role_arg = ""
+      for role in roles[1:]:
+        role_arg = role_arg +" "+ role.mention
+
+
+      perm_list = [perm[0] for perm in member.guild_permissions if perm[1]]
+      perm = ""
+      for i in perm_list:
+        if "_" in i:
+          i = i.title()
+          perm = perm + ", " + i.replace("_", " ")
+        else:
+          perm = perm + ", " + i
+      
+      perm = perm[1:]
+
+
+      emb = discord.Embed(title="", description=f"Mention: {member.mention}\nID:`{member.id}`\n{'Nickname: '+nick if nick!=None else ' '}", color = ctx.author.color)
+
+      emb.set_author(name=username, url="http://teny.sumir.unaux.com", icon_url=avatar)
+      emb.add_field(name="Joined", value=f"**{year_join}** at **{tim_join}**")
     
-    if isinstance(ctx.channel, discord.channel.DMChannel):
-          desc = f"**Use this command in a server, to get server members too!**\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
-    else:
-      a=ctx.guild.member_count
-      desc = f"**Members in** ***{ctx.guild.name:}*** **:** {a}\n\n*The bot is serving* **{members} members** *in total*, and **{uniq_members} unique members!** "
-    await ctx.send(embed=em(ctx, f"Members Info!", desc))
+      emb.add_field(name="Created", value=f"**{year}** at **{tim}**")
+      emb.add_field(name="Roles", value=role_arg, inline=False)
+      emb.add_field(name="Permissions", value=perm)
+      emb.set_thumbnail(url = avatar)
+      emb.set_footer(text=f"In {member.guild.name}", icon_url=member.guild.icon_url)
+      await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+
+  @commands.command(aliases=["av"])
+  async def avatar(self, ctx, member:discord.Member=None):
+    if not member:
+      member = ctx.author
+    avatar_png = member.avatar_url_as(format="png")
+    avatar_jpg = member.avatar_url_as(format="jpg")
+    avatar_fk = member.avatar_url_as(format="png", size=4096)
+    avatar = member.avatar_url
+    await ctx.send(embed = em(ctx, f"Avatar - {member.name}", f"Links:\n[**PNG**]({avatar_png}) | [**JPG**]({avatar_jpg}) | [**4K**]({avatar_fk})").set_image(url = avatar))
+
+  @commands.command()
+  async def gold(self, ctx, *, arg=None):
+    try:
+      if not arg:
+        await ctx.send(embed = err("Please provide an argument!"))
+      else:
+        arg = arg.replace(" ", "%20")
+        url = f"https://habbofont.net/font/steampunk/{arg}.gif"
+        emb = em(ctx, "", "")
+        emb.set_image(url = url)
+        await ctx.send(embed = emb)
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
+    
 
 
 

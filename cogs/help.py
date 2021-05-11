@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import os
+import os, asyncio
 
 prefix = os.environ['prefix']
 class Help(commands.Cog):
@@ -16,29 +16,72 @@ class Help(commands.Cog):
 
   @commands.group(invoke_without_command=True)
   async def help(self, ctx):
-    e = discord.Embed(title="", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color)
-  
-    e.set_author(name = "Help", url="", icon_url="https://cdn.discordapp.com/attachments/825992733960175616/836626787546562641/1f6e0.png")
 
-    e.add_field(name="<:info:836638112394117160> Fact", value=f"<a:st:836663594262200390> `{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
 
-    e.add_field(name="<:info:836638112394117160> Info", value=f"<a:st:836663594262200390> `{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`", inline=False)
+    def h(a):
+      emb = discord.Embed(title="", description=f"Type {prefix}help <command> for more info.", color=ctx.author.color) 
+      emb.set_author(name = "Help", url="", icon_url="https://cdn.discordapp.com/attachments/825992733960175616/836626787546562641/1f6e0.png")
+      
+      if a == 0:
+        emb.add_field(name="<:info:836638112394117160> Fact", value=f"<a:st:836663594262200390> `{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
+      elif a==1:
+        emb.add_field(name="<:info:836638112394117160> Info", value=f"<a:st:836663594262200390> `{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`", inline=True)
+      elif a == 2:
+        emb.add_field(name="<:info:836638112394117160> General", value=f"<a:st:836663594262200390> `{prefix}ping`, `{prefix}help`, `{prefix}poll <title|option1|option2|...option10>`, `{prefix}members`, `{prefix}channels`, `{prefix}oxygene <text>`, `{prefix}gold <text>`, `{prefix}whois <member (optional)>`, `{prefix}av <member>(optional)`, `{prefix}website`", inline=True)
+      elif a==3:
+        emb.add_field(name="<:info:836638112394117160> Fun", value=f"<a:st:836663594262200390> `{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`, `{prefix}eject <user> <imposter> <crewmate color>(type {prefix}help eject for more info!)`", inline=True)
+      elif a == 4:
+        emb.add_field(name="<:info:836638112394117160> Joke", value=f"<a:st:836663594262200390> `{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
+      elif a ==5:
+        emb.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=True)
+      elif a == 6:
+        emb.add_field(name="<:info:836638112394117160> Bot", value=f"<a:st:836663594262200390> `{prefix}contact <Your issue to the dev>`, `{prefix}invite`, `{prefix}vote`\n\n**Checkout Bots Website: [Click here](http://teny.sumir.unaux.com)**", inline=True)
+      elif a == 7:
+        emb.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=True)
+      emb.set_footer(text="By Spookie_Stunkk/Sumir")
 
-    e.add_field(name="<:info:836638112394117160> General", value=f"<a:st:836663594262200390> `{prefix}ping`, `{prefix}help`, `{prefix}poll <title|option1|option2|...option10>`, `{prefix}members`", inline=False)
+      return emb
 
-    e.add_field(name="<:info:836638112394117160> Fun", value=f"<a:st:836663594262200390> `{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`", inline=False)
 
-    e.add_field(name="<:info:836638112394117160> Joke", value=f"<a:st:836663594262200390> `{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
+    msg = await ctx.send(embed=h(0))
 
-    e.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=False)
 
-    e.add_field(name="<:info:836638112394117160> Bot", value=f"<a:st:836663594262200390> `{prefix}contact <Your issue to the dev>`, `{prefix}invite`", inline=False)
-
-    e.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=False)
+    emotes= ["◀️", "▶️"]
+    for e in emotes:
+      await msg.add_reaction(e)
+    def check(reaction, user):
+      return( user == ctx.message.author and str(reaction.emoji) in emotes)
     
-    e.set_footer(text="By Spookie_Stunkk/Sumir")
-    await ctx.send(embed=e)
+    o = 0
+    rnum = 0
+    while o==0:
+      try:
+        reaction, user = await self.bot.wait_for('reaction_add', timeout=120,check=check)
+        
+        if reaction.emoji == "◀️":
+          if rnum == 0:
+            pass
+          else:
+            rnum -= 1
+          await msg.edit(embed = h(rnum))
+          try:
+            await msg.remove_reaction('◀️',member=ctx.author)
+          except:
+            pass
 
+        if reaction.emoji == "▶️":
+          if rnum == 7:
+            pass
+          else:
+            rnum += 1
+          await msg.edit(embed = h(rnum))
+          try:
+            await msg.remove_reaction('▶️',member=ctx.author)
+          except:
+            pass
+
+      except asyncio.TimeoutError:
+        o = 1
     
 
 
@@ -182,8 +225,38 @@ class Help(commands.Cog):
     e = discord.Embed(title="Member Info!", description=f"Get member info of the server and the bot together!" , color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}members`")
     await ctx.send(embed=e)
-
-
+  @help.command()
+  async def channels(self, ctx):
+    e = discord.Embed(title="Channels Info!", description=f"Get channel info of the server and the bot together!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}channels`")
+    await ctx.send(embed=e)
+  
+  @help.command()
+  async def oxygene(self, ctx):
+    e = discord.Embed(title="Oxygene Font!", description=f"Convert normal text to cool font and send it as an image!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}oxygene <text>`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def whois(self, ctx):
+    e = discord.Embed(title="Member Info!", description=f"Get a members every useful info with one command!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}whois <member>(optional)`\n\nIf member is not provided, it returns the info of user of who initiated the command!")
+    await ctx.send(embed=e)
+  @help.command()
+  async def gold(self, ctx):
+    e = discord.Embed(title="Golden Font!", description=f"Convert normal text to cool font and send it as an image!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}gold <text>`")
+    await ctx.send(embed=e)
+  @help.command(aliases=["avatar"])
+  async def av(self, ctx):
+    e = discord.Embed(title="Avatar!", description=f"Get a members avatar with links to PNG, JPG and even 4K images.!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}avatar <member>(optional)`\n\nIf member is not provided, it returns avatar of user of who initiated the command!")
+    await ctx.send(embed=e)
+  @help.command()
+  async def eject(self, ctx):
+    e = discord.Embed(title="Amogus!", description=f"Get an Among Us imposter edited picture!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}eject <user> <imposter> <crewmate color>`")
+    e.add_field(name="**Example**", value=f"You can leave imposter and crew mate color empty for it to be random! Imposter decides whether the user gets imposter or not! You can type true or false for it to work. Eg: `{prefix}eject <user> false`\nImposter color you can choose from are: ['black','blue','brown','cyan','darkgreen','lime','orange','pink','purple','red','white','yellow'], Eg: `{prefix}eject <user> true cyan`")
+    await ctx.send(embed=e)
 
 
 

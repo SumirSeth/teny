@@ -15,3 +15,6 @@ IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of rang
 IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
 IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
 IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+Forbidden at line 45 of /home/runner/teny/cogs/general.py: 403 Forbidden (error code: 50001): Missing Access
+AttributeError at line 141 of /home/runner/teny/cogs/general.py: 'User' object has no attribute 'nick'
