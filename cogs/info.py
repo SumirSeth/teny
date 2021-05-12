@@ -150,6 +150,8 @@ class Info(commands.Cog):
   
   @commands.command()
   async def covid(self, ctx, *, arg=None):
+    if arg.lower() == "england":
+      arg = "uk" 
     try:
       if not arg:
         await ctx.send(embed=err("Try using this command with a country name!"))
@@ -173,6 +175,10 @@ class Info(commands.Cog):
         rec = f'{rec:,}'
         death = f'{death:,}'
         em = discord.Embed(title="Covid Stats!", description=f"Country: **{coun}**\n\nTotal Cases: **{tcase}**\nActive: **{acase}**\nRecovered: **{rec}**\n\nTotal Deaths: **{death}**", color=ctx.author.color)
+
+        ima = f"https://covid-img.herokuapp.com/country/{coun.lower()}"
+        em.set_image(url=ima)
+        await asyncio.sleep(2)
         await ctx.send(embed=em)
     except Exception as e:
       await ctx.send("Error! Try later.")

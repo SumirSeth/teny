@@ -18,3 +18,10 @@ IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of rang
 IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
 Forbidden at line 45 of /home/runner/teny/cogs/general.py: 403 Forbidden (error code: 50001): Missing Access
 AttributeError at line 141 of /home/runner/teny/cogs/general.py: 'User' object has no attribute 'nick'
+HTTPException at line 285 of /home/runner/teny/cogs/info.py: 400 Bad Request (error code: 50035): Invalid Form Body
+In embed.author.name: Must be 256 or fewer in length.
+HTTPException at line 285 of /home/runner/teny/cogs/info.py: 400 Bad Request (error code: 50035): Invalid Form Body
+In embed.author.name: Must be 256 or fewer in length.
+IndexError at line 167 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 169 of /home/runner/teny/cogs/info.py: list index out of range
+IndexError at line 169 of /home/runner/teny/cogs/info.py: list index out of range

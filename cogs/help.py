@@ -15,7 +15,7 @@ class Help(commands.Cog):
 
 
   @commands.group(invoke_without_command=True)
-  async def help(self, ctx):
+  async def help(self, ctx, arg:int=None):
 
 
     def h(a):
@@ -24,96 +24,98 @@ class Help(commands.Cog):
       
       if a == 0:
         emb.add_field(name="<:info:836638112394117160> Fact", value=f"<a:st:836663594262200390> `{prefix}fact <category name>`. Categories: `cat`, `anime`, `useless`, `chuck`, `num`, `dog`\n\nType `{prefix}fact` for more info!", inline=True)
+        emb.add_field(name="<:info:836638112394117160> Info", value=f"<a:st:836663594262200390> `{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`, `{prefix}lyrics <song name>`", inline=False)
       elif a==1:
-        emb.add_field(name="<:info:836638112394117160> Info", value=f"<a:st:836663594262200390> `{prefix}country <name>`, `{prefix}weather <place>`, `{prefix}news <search term> <page number>`, `{prefix}covid <country name>`, `{prefix}urban <search term>`, `{prefix}wiki <search term>`, `{prefix}curcon`", inline=True)
-      elif a == 2:
         emb.add_field(name="<:info:836638112394117160> General", value=f"<a:st:836663594262200390> `{prefix}ping`, `{prefix}help`, `{prefix}poll <title|option1|option2|...option10>`, `{prefix}members`, `{prefix}channels`, `{prefix}oxygene <text>`, `{prefix}gold <text>`, `{prefix}whois <member (optional)>`, `{prefix}av <member>(optional)`, `{prefix}website`", inline=True)
-      elif a==3:
-        emb.add_field(name="<:info:836638112394117160> Fun", value=f"<a:st:836663594262200390> `{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`, `{prefix}eject <user> <imposter> <crewmate color>(type {prefix}help eject for more info!)`", inline=True)
-      elif a == 4:
+        emb.add_field(name="<:info:836638112394117160> Fun", value=f"<a:st:836663594262200390> `{prefix}hug <user (optional)>`,`{prefix}wink <user (optional)>`, `{prefix}lovecal <name 1> <name 2>`, `{prefix}advice`,`{prefix}quote`, `{prefix}bill`, `{prefix}kanye`, `{prefix}gay`, `{prefix}pp`, `{prefix}meme`, `{prefix}8ball <question>`, `{prefix}monke`, `{prefix}doge <text>`, `{prefix}aff`, `{prefix}y/n <question>`", inline=False)
+      elif a == 2:
         emb.add_field(name="<:info:836638112394117160> Joke", value=f"<a:st:836663594262200390> `{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
-      elif a ==5:
-        emb.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=True)
-      elif a == 6:
+        emb.add_field(name="<:info:836638112394117160> Meme-Gen, Text & Image Manipulation", value=f"<a:st:836663594262200390> `{prefix}eject <user> <imposter> <crewmate color>(type {prefix}help eject for more info!)`, `{prefix}drip <user(@mention/user id/username/name/nickname)>`, `{prefix}stonks <user(@mention/user id/username/name/nickname)>`, `{prefix}batman <user1> <user2> <arg>`, `{prefix}carreverse <text>`, `{prefix}changemymind <text>`, `{prefix}firsttime <user>`, `{prefix}grave <user>`, `{prefix}trash <user>`, `{prefix}magik <user>`, `{prefix}emojify <text>`, `{prefix}reverse <text>`, `{prefix}spank <user1> <user2>(optional)`", inline=False)
+      elif a==3:
+        emb.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=False)
+      elif a == 4:
         emb.add_field(name="<:info:836638112394117160> Bot", value=f"<a:st:836663594262200390> `{prefix}contact <Your issue to the dev>`, `{prefix}invite`, `{prefix}vote`\n\n**Checkout Bots Website: [Click here](http://teny.sumir.unaux.com)**", inline=True)
-      elif a == 7:
-        emb.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=True)
-      emb.set_footer(text="By Spookie_Stunkk/Sumir")
+        emb.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=False)
+      emb.set_footer(text=f"Page: {a+1}/5 | By Spookie_Stunkk/Sumir")
 
       return emb
 
+    if not arg:
+      msg = await ctx.send(embed=h(0))
 
-    msg = await ctx.send(embed=h(0))
 
-
-    emotes= ["⏪","◀️", "▶️","⏩"]
-    for e in emotes:
-      await msg.add_reaction(e)
-    def check(reaction, user):
-      return( user == ctx.message.author and str(reaction.emoji) in emotes)
-    
-    o = 0
-    rnum = 0
-    m = 0
-    while o==0:
-      try:
-        reaction, user = await self.bot.wait_for('reaction_add', timeout=120,check=check)
-        
-        if reaction.emoji == "◀️":
-          if rnum == 0:
-            pass
-          else:
-            rnum -= 1
-          await msg.edit(embed = h(rnum))
-          try:
-            await msg.remove_reaction('◀️',member=ctx.author)
-          except:
-            if m == 0:
-              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
-              m = 1
-            else:
+      emotes= ["⏪","◀️", "▶️","⏩"]
+      for e in emotes:
+        await msg.add_reaction(e)
+      def check(reaction, user):
+        return( user == ctx.message.author and str(reaction.emoji) in emotes)
+      
+      o = 0
+      rnum = 0
+      m = 0
+      while o==0:
+        try:
+          reaction, user = await self.bot.wait_for('reaction_add', timeout=120,check=check)
+          
+          if reaction.emoji == "◀️":
+            if rnum == 0:
               pass
-
-        if reaction.emoji == "▶️":
-          if rnum == 7:
-            pass
-          else:
-            rnum += 1
-          await msg.edit(embed = h(rnum))
-          try:
-            await msg.remove_reaction('▶️',member=ctx.author)
-          except:
-            if m == 0:
-              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
-              m = 1
             else:
-              pass
-        
-        if reaction.emoji == "⏪":
-          await msg.edit(embed = h(0))
-          try:
-            await msg.remove_reaction("⏪", member=ctx.author)
-          except:
-            if m == 0:
-              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
-              m = 1
-            else:
-              pass
-        
+              rnum -= 1
+            await msg.edit(embed = h(rnum))
+            try:
+              await msg.remove_reaction('◀️',member=ctx.author)
+            except:
+              if m == 0:
+                await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+                m = 1
+              else:
+                pass
 
-        if reaction.emoji == "⏩":
-          await msg.edit(embed = h(7))
-          try:
-            await msg.remove_reaction("⏩", member=ctx.author)
-          except:
-            if m == 0:
-              await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
-              m = 1
-            else:
+          if reaction.emoji == "▶️":
+            if rnum == 4:
               pass
+            else:
+              rnum += 1
+            await msg.edit(embed = h(rnum))
+            try:
+              await msg.remove_reaction('▶️',member=ctx.author)
+            except:
+              if m == 0:
+                await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+                m = 1
+              else:
+                pass
+          
+          if reaction.emoji == "⏪":
+            await msg.edit(embed = h(0))
+            rnum = 0
+            try:
+              await msg.remove_reaction("⏪", member=ctx.author)
+            except:
+              if m == 0:
+                await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+                m = 1
+              else:
+                pass
+          
 
-      except asyncio.TimeoutError:
-        o = 1
+          if reaction.emoji == "⏩":
+            await msg.edit(embed = h(4))
+            rnum = 4
+            try:
+              await msg.remove_reaction("⏩", member=ctx.author)
+            except:
+              if m == 0:
+                await ctx.send("Please give me reaction add and remove perms to function with the reaction controls properly.")
+                m = 1
+              else:
+                pass
+
+        except asyncio.TimeoutError:
+          o = 1
+    elif int(arg)==1 or 2 or 3 or 4 or 5:
+      await ctx.send(embed = h(arg-1))
     
 
 
@@ -289,8 +291,41 @@ class Help(commands.Cog):
     e.add_field(name="**Syntax**", value=f"`{prefix}eject <user> <imposter> <crewmate color>`")
     e.add_field(name="**Example**", value=f"You can leave imposter and crew mate color empty for it to be random! Imposter decides whether the user gets imposter or not! You can type true or false for it to work. Eg: `{prefix}eject <user> false`\nImposter color you can choose from are: ['black','blue','brown','cyan','darkgreen','lime','orange','pink','purple','red','white','yellow'], Eg: `{prefix}eject <user> true cyan`")
     await ctx.send(embed=e)
+  @help.command()
+  async def lyrics(self, ctx):
+    e = discord.Embed(title="Lyrics!", description=f"Get lyrics of a song!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}lyrics <song name>`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def drip(self, ctx):
+    e = discord.Embed(title="Drip!", description=f"Get drip edited picture with pfp!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}drip <user>`")
+    await ctx.send(embed=e)
+  @help.command()
+  async def stonks(self, ctx):
+    e = discord.Embed(title="Stonks!", description=f"Get stonks edited picture with pfp!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}stonks <user>`")
+    await ctx.send(embed=e)
+  
+  @help.command()
+  async def batman(self, ctx):
+    e = discord.Embed(title="Bat Man!", description=f"Get batman edited picture with pfp!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}batman <user1> <user2> <text|text2>`")
+    e.add_field(name="**Example**", value=f"User is a discord member which the bot can access using their @mention/uerid/username/nickname etc.\n\nThe command reqired 2 users and 2 texts joined by a '|'.\n\nAssume we have user x and user y, we can write: `{prefix}batman @x @y <text|text2>`.\nThe first user mentioned will be considered batman and the 'text1' will be said by x in the image hence y will say 'text'.", inline=False)
+    
+    await ctx.send(embed=e)
+  
+  @help.command()
+  async def carreverse(self, ctx):
+    e = discord.Embed(title="Car Revese Meme!", description=f"Get car reverse edited picture with custom text!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}carreverse <text>`")
+    await ctx.send(embed=e)
 
-
+  @help.command()
+  async def changemymind(self, ctx):
+    e = discord.Embed(title="Chany My Mind!", description=f"Get change my mind edited picture with custom text!" , color=ctx.author.color)
+    e.add_field(name="**Syntax**", value=f"`{prefix}changemymind <text>`")
+    await ctx.send(embed=e)
 
 
 

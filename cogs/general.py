@@ -182,16 +182,22 @@ class General(commands.Cog):
       with open("/home/runner/teny/error-log.txt", "a") as f:
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
-
+  
   @commands.command(aliases=["av"])
   async def avatar(self, ctx, member:discord.Member=None):
-    if not member:
-      member = ctx.author
-    avatar_png = member.avatar_url_as(format="png")
-    avatar_jpg = member.avatar_url_as(format="jpg")
-    avatar_fk = member.avatar_url_as(format="png", size=4096)
-    avatar = member.avatar_url
-    await ctx.send(embed = em(ctx, f"Avatar - {member.name}", f"Links:\n[**PNG**]({avatar_png}) | [**JPG**]({avatar_jpg}) | [**4K**]({avatar_fk})").set_image(url = avatar))
+    try:
+      if not member:
+        member = ctx.author
+      avatar_png = member.avatar_url_as(format="png")
+      avatar_jpg = member.avatar_url_as(format="jpg")
+      avatar_fk = member.avatar_url_as(format="png", size=4096)
+      avatar = member.avatar_url
+      await ctx.send(embed = em(ctx, f"Avatar - {member.name}", f"Links:\n[**PNG**]({avatar_png}) | [**JPG**]({avatar_jpg}) | [**4K**]({avatar_fk})").set_image(url = avatar))
+    except Exception as e:
+      await ctx.send("Error! Try later.")
+      with open("/home/runner/teny/error-log.txt", "a") as f:
+        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
+        f.close()
 
   @commands.command()
   async def gold(self, ctx, *, arg=None):
@@ -209,6 +215,12 @@ class General(commands.Cog):
       with open("/home/runner/teny/error-log.txt", "a") as f:
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
+    
+  @commands.command()
+  async def test(self, ctx, *,arg):
+    print(arg)
+
+
     
 
 

@@ -11,7 +11,7 @@ prefix = os.environ['prefix']
 
 intents = discord.Intents().all()
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix=["t,", "T,", "<@824888045622394910> "], help_command=None,intents=intents)
+bot = commands.Bot(command_prefix=["t,", "T,", "<@!824888045622394910> ", "<@824888045622394910> "], help_command=None,intents=intents)
 
 owner = [740845704326676493, 575263293015588867]
 #------------------CONFIGS------------------
@@ -94,16 +94,10 @@ async def servers(ctx):
 @commands.bot_has_permissions(send_messages=True)
 @bot.event 
 async def on_message(message):
-  try:
-      if bot.user.mentioned_in(message):
-        if message.mention_everyone:
-          return
-        else:
-          embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
-          await message.channel.send(embed=embed)
-      await bot.process_commands(message)
-  except Exception as e:
-    print(f"Ping error: {e}")
+  if message.content == "<@!824888045622394910>" or message.content == "<@824888045622394910>":
+    embed = discord.Embed(title="Tény!", description=f"Hello! My prefix is `{prefix}`!\nType `{prefix}help` for more info.\n\n**Invite Me:** [INVITE](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)\n**Contact server:** [Server](https://discord.gg/cVvXNgj5D2)\n**Dev:** Spookie_Stunkk/Sumir", color=message.author.color)
+    await message.channel.send(embed=embed)
+  await bot.process_commands(message)
 
 
 

@@ -314,52 +314,6 @@ class Fun(commands.Cog):
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
 
-  @commands.command()
-  async def eject(self, ctx, name:discord.Member=None, imposter=None, crew=None):
-    if not name:
-      await ctx.send(embed = err("Please enter a user! You can mention/user id/name/username/nickname"))
-    else:
-      try:
-        n = name.name
-        
-      except:
-        await ctx.send(embed = err("Please enter a user! You can mention/user id/name/username/nickname"))
-      if not imposter:
-        choices = ["true", "false"]
-        imposter = random.choice(choices)
-      
-      n= n.replace(" ", "%20")
-      if not crew:
-        choice = ['black','blue','brown','cyan','darkgreen','lime','orange','pink','purple','red','white','yellow']
-        crew = random.choice(choice)
-      else:
-        crew = crew.lower()
-      
-      
-      url = f"https://vacefron.nl/api/ejected?name={n}&impostor={imposter}&crewmate={crew}"  
-
-
-      await ctx.send(url)
-
-  @commands.command()
-  async def drip(self, ctx, user:discord.Member=None):
-    if not user:
-      await ctx.send(embed = err("Please @mention/user id/username/name/nick name is required."))
-    else:
-      av = user.avatar_url
-      url = f"https://vacefron.nl/api/drip?user={av}"
-      await asyncio.sleep(2)
-      await ctx.send(url)
-
-  @commands.command()
-  async def stonks(self, ctx, user:discord.Member=None):
-    if not user:
-      await ctx.send(embed = err("Please @mention/user id/username/name/nick name is required."))
-    else:
-      av = user.avatar_url
-      url = f"https://vacefron.nl/api/stonks?user={av}"
-      await ctx.send(url)
-    
 
 
 
