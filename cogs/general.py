@@ -113,22 +113,7 @@ class General(commands.Cog):
   async def website(self, ctx):
     await ctx.send(embed = em(ctx, "My Website!", "http://teny.sumir.unaux.com"))
   
-  @commands.command()
-  async def oxygene(self, ctx, *, arg=None):
-    try:
-      if not arg:
-        await ctx.send(embed = err("Please provide an argument!"))
-      else:
-        arg = arg.replace(" ", "%20")
-        url = f"https://gdcolon.com/tools/gdlogo/img/{arg}"
-        emb = em(ctx, "", "")
-        emb.set_image(url = url)
-        await ctx.send(embed = emb)
-    except Exception as e:
-      await ctx.send("Error! Try later.")
-      with open("/home/runner/teny/error-log.txt", "a") as f:
-        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
-        f.close()
+  
 
   @commands.command()
   async def whois(self, ctx, member:discord.Member=None):
@@ -199,26 +184,17 @@ class General(commands.Cog):
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
 
-  @commands.command()
-  async def gold(self, ctx, *, arg=None):
-    try:
-      if not arg:
-        await ctx.send(embed = err("Please provide an argument!"))
-      else:
-        arg = arg.replace(" ", "%20")
-        url = f"https://habbofont.net/font/steampunk/{arg}.gif"
-        emb = em(ctx, "", "")
-        emb.set_image(url = url)
-        await ctx.send(embed = emb)
-    except Exception as e:
-      await ctx.send("Error! Try later.")
-      with open("/home/runner/teny/error-log.txt", "a") as f:
-        f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
-        f.close()
+  
     
   @commands.command()
-  async def test(self, ctx, *,arg):
-    print(arg)
+  async def com(self, ctx):
+    for c in self.bot.walk_commands():
+      print(c)
+
+  @commands.command()
+  async def messages(self, ctx, u1:discord.Member=None):
+    print(0)
+    
 
 
     

@@ -183,6 +183,12 @@ class Random(commands.Cog):
       with open("/home/runner/teny/error-log.txt", "a") as f:
         f.write(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}\n")
         f.close()
+
+  @random.command()
+  async def waifu(self, ctx):
+    url = f"https://www.thiswaifudoesnotexist.net/example-{random.randint(1,100000)}.jpg"
+
+    await ctx.send(embed = em(ctx, "Waifu!", "").set_image(url=url))
   
   
 

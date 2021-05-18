@@ -32,7 +32,9 @@ class Help(commands.Cog):
         emb.add_field(name="<:info:836638112394117160> Joke", value=f"<a:st:836663594262200390> `{prefix}joke <category name>`. Categories: `programming (pro)`, `miscellaneous (misc)`, `dark (d)`, `pun (p)`, `spooky (sp)`, `christmas (chr)`, `dadjoke(dad)`, `yomom`, `bread`\n\nType `{prefix}joke` for more info!")
         emb.add_field(name="<:info:836638112394117160> Meme-Gen, Text & Image Manipulation", value=f"<a:st:836663594262200390> `{prefix}eject <user> <imposter> <crewmate color>(type {prefix}help eject for more info!)`, `{prefix}drip <user(@mention/user id/username/name/nickname)>`, `{prefix}stonks <user(@mention/user id/username/name/nickname)>`, `{prefix}batman <user1> <user2> <arg>`, `{prefix}carreverse <text>`, `{prefix}changemymind <text>`, `{prefix}firsttime <user>`, `{prefix}grave <user>`, `{prefix}trash <user>`, `{prefix}magik <user>`, `{prefix}emojify <text>`, `{prefix}reverse <text>`, `{prefix}spank <user1> <user2>(optional)`", inline=False)
       elif a==3:
-        emb.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`",inline=False)
+        emb.add_field(name="<:info:836638112394117160> Random", value=f"<a:st:836663594262200390> `{prefix}random <category>`. Categories: `cat`, `dog`, `fox`, `panda`, `redpanda`, `bird`, `koala`, `image`, `color`, `waifu`",inline=False)
+        emb.add_field(name="<:info:836638112394117160> Fonts and Logos", value=f"<a:st:836663594262200390> `{prefix}fonts <category>`. Categories: `oxygene`, `gold`, `strongman`, `neon`, `fluffy`, `tweeter`, `fancy`, `metal`, `dance`, `party`, `booking`, `scribble`, `flame`, `craft`\n\n<a:st:836663594262200390> `{prefix}logos <category>`. Categories: `green`, `bold`, `simple`",inline=False)
+        
       elif a == 4:
         emb.add_field(name="<:info:836638112394117160> Bot", value=f"<a:st:836663594262200390> `{prefix}contact <Your issue to the dev>`, `{prefix}invite`, `{prefix}vote`\n\n**Checkout Bots Website: [Click here](http://teny.sumir.unaux.com)**", inline=True)
         emb.add_field(name="🔴Invite Bot", value="<a:st:836663594262200390> [**Click here!**](https://discord.com/api/oauth2/authorize?client_id=824888045622394910&permissions=3723869398&scope=bot)", inline=False)
@@ -114,7 +116,7 @@ class Help(commands.Cog):
 
         except asyncio.TimeoutError:
           o = 1
-    elif int(arg)==1 or 2 or 3 or 4 or 5:
+    elif int(arg)==1 or arg==2 or arg==3 or arg==4 or arg==5:
       await ctx.send(embed = h(arg-1))
     
 
@@ -265,21 +267,13 @@ class Help(commands.Cog):
     e.add_field(name="**Syntax**", value=f"`{prefix}channels`")
     await ctx.send(embed=e)
   
-  @help.command()
-  async def oxygene(self, ctx):
-    e = discord.Embed(title="Oxygene Font!", description=f"Convert normal text to cool font and send it as an image!" , color=ctx.author.color)
-    e.add_field(name="**Syntax**", value=f"`{prefix}oxygene <text>`")
-    await ctx.send(embed=e)
+  
   @help.command()
   async def whois(self, ctx):
     e = discord.Embed(title="Member Info!", description=f"Get a members every useful info with one command!" , color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}whois <member>(optional)`\n\nIf member is not provided, it returns the info of user of who initiated the command!")
     await ctx.send(embed=e)
-  @help.command()
-  async def gold(self, ctx):
-    e = discord.Embed(title="Golden Font!", description=f"Convert normal text to cool font and send it as an image!" , color=ctx.author.color)
-    e.add_field(name="**Syntax**", value=f"`{prefix}gold <text>`")
-    await ctx.send(embed=e)
+
   @help.command(aliases=["avatar"])
   async def av(self, ctx):
     e = discord.Embed(title="Avatar!", description=f"Get a members avatar with links to PNG, JPG and even 4K images.!" , color=ctx.author.color)
@@ -326,6 +320,10 @@ class Help(commands.Cog):
     e = discord.Embed(title="Chany My Mind!", description=f"Get change my mind edited picture with custom text!" , color=ctx.author.color)
     e.add_field(name="**Syntax**", value=f"`{prefix}changemymind <text>`")
     await ctx.send(embed=e)
+
+  @help.command(aliases=["oxygene", "gold", "strongman", "neon", "fluffy", "tweeter", "fancy", "metal", "dance", "party", "booking"])
+  async def fonts(self, ctx):
+    await ctx.send(f"Depreciated. Please use `{prefix}fonts` to for info.")
 
 
 

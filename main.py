@@ -11,7 +11,7 @@ prefix = os.environ['prefix']
 
 intents = discord.Intents().all()
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix=["t,", "T,", "<@!824888045622394910> ", "<@824888045622394910> "], help_command=None,intents=intents)
+bot = commands.Bot(command_prefix=["t,", "T,", "<@!824888045622394910> ", "<@824888045622394910> ", "teny ", "Teny ", "Tény ", "tény "], help_command=None,intents=intents)
 
 owner = [740845704326676493, 575263293015588867]
 #------------------CONFIGS------------------
@@ -53,6 +53,7 @@ async def ping(ctx):
             description=
             f":ping_pong: Pong! The ping is **{round(bot.latency *1000)}** milliseconds!",
             color=0x990000)
+    embed.set_image(url = f"https://falsiskremlin.sirv.com/resim_2020-11-28_113400.png?text.0.text={round(bot.latency*1000)}%20ms&text.0.position.x=-10%25&text.0.position.y=-25%25&text.0.size=60&text.0.color=ffffff&text.0.font.family=Play&watermark.0.image=%2FImages%2Fresim_2020-11-28_113954.png&watermark.0.position.x=-35%25&watermark.0.scale.width=200&watermark.0.scale.height=200")
     await ctx.send(embed=embed)
 
 @bot.command()
