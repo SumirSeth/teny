@@ -125,7 +125,7 @@ class Meme_Gen(commands.Cog):
       av = user.avatar_url_as(format="jpg")
       av = str(av)
       av = av[:len(av)-10]
-      url = f"https://api.becoditive.xyz/v1/images/delete?image={av}"
+      url = f"https://api.becoditive.xyz/v2/images/delete?image={av}"
       await ctx.send(url)
     
   @commands.command()
@@ -154,10 +154,12 @@ class Meme_Gen(commands.Cog):
     if not arg:
       await ctx.send(embed = err("Please provide a text!"))
     else:
-      arg = arg.replace(" ", "%20")
-      url = f"https://api.devs-hub.xyz/reverse?text={arg}"
-      data = json.loads(requests.request("GET", url=url).text)
-      await ctx.send(data["reverse"])
+      arg = list(arg)
+      arg.reverse()
+      text = ""
+      for i in arg:
+        text += i
+      await ctx.send(text)
 
   @commands.command()
   async def spank(self, ctx, u1:discord.Member=None, u2:discord.Member=None):

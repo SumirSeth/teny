@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 import os
 
 
@@ -187,13 +188,23 @@ class General(commands.Cog):
   
     
   @commands.command()
-  async def com(self, ctx):
-    for c in self.bot.walk_commands():
-      print(c)
+  async def test(self, ctx, *, arg=None):
+    ddb = DiscordComponents(self.bot)
+    counter = 0
+    m = await ctx.send(f"{counter} Clicks",components=[Button(style=ButtonStyle.randomColor(), label="Click Me!", id="1", emoji="👉")])
+    while True:
+      res = await ddb.wait_for_interact("button_click")
+      if res.channel == ctx.message.channel:
+        counter += 1
+        await m.edit(f"{counter} Clicks",components=[Button(style=ButtonStyle.randomColor(), label="Click Me!", id="1", emoji="👉")])
+        print(counter)
+        await res.respond(
+              type=InteractionType.ChannelMessageWithSource,
+              content=f'{res.component.label} {counter}'
+          )
+      res = await ddb.wait_for_interact("button_click")
 
-  @commands.command()
-  async def messages(self, ctx, u1:discord.Member=None):
-    print(0)
+    
     
 
 

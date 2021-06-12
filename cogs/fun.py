@@ -8,6 +8,9 @@ import urllib.parse
 import alexflipnote
 import time, asyncio
 
+#this is the fun cog
+
+
 alex = alexflipnote.Client("A4r4T7opKWOTnLnwOXDLYKLnlEkvi2cbgkIMTci5")
 
 rkey = os.environ['rkey']
@@ -295,7 +298,7 @@ class Fun(commands.Cog):
         f.close()
   
   @commands.command(aliases=["y/n"])
-  async def yesno(self, ctx, arg):
+  async def yesno(self, ctx, arg=None):
     try:
       if not arg:
         await ctx.send(embed = err("You forgot to give a question."))
@@ -305,7 +308,7 @@ class Fun(commands.Cog):
         data = json.loads(response.text)
         a = data["answer"]
         l = data["image"]
-        embed = em(ctx, "Yes or No-", f'**{a}**')
+        embed = em(ctx, "Yes or No-", f'**{a.title()}**')
         embed.set_image(url = l)
         await ctx.send(embed = embed)
     except Exception as e:

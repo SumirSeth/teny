@@ -4,12 +4,20 @@ import os,requests,json
 from googleapiclient import discovery
 
 
+#its actually deployed into a bot
+# and it checks if a certain message is "TOXIC" meaning hate comments except
+# its send a request to googles API and the API returns a "GET" message which can be stored into a json
+#it looks complicated but the thing is its not made in 1 day
+# ok i need some mins to turn it on
+
 API_KEY = os.environ['APIKEY']
+#api from google which rates a text on the basis of TOXICITY
 
 with open("/home/runner/teny/cogs/ai-serverCheck.json", 'r') as f:
       ai_server = json.load(f)
 
 class Ai(commands.Cog):
+#initialising here with the class^
 
   def __init__(self, bot):
     self.bot = bot
@@ -22,6 +30,7 @@ class Ai(commands.Cog):
 
   @commands.Cog.listener()
   async def on_message(self, message):
+  #main function
     gid = message.guild.id
     try:
       check = ai_server[f"{gid}"]["ai-chat"]
@@ -93,3 +102,5 @@ class Ai(commands.Cog):
 
 def setup(bot):
   bot.add_cog(Ai(bot))
+
+#setup from class

@@ -15,6 +15,7 @@ python-dotenv = "^0.17.0"
 youtube-dl = "^2021.4.17"
 google-api-python-client = "^2.2.0"
 "alexflipnote.py" = "^2.3.0"
+discord-components = "^0.4.7"
 
 
 

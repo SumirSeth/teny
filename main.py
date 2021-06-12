@@ -83,6 +83,7 @@ async def vote(ctx):
   await ctx.send(embed = e)
 
 @bot.command()
+@commands.is_owner()
 async def servers(ctx):
   if ctx.author.id == owner[1] or owner[0]:
     a = ''
